@@ -70,7 +70,7 @@ bot.on('message', function (msg) {
     //bot.sendPhoto(chatId, photo, {caption: 'Node test send image'});
     //bot.sendMessage(chatId,  chatId);
 });
-
+/*
 bot.onText(/(.+)/, function (msg, match) {
     var userId = msg.from.id;
     var userName = msg.from.first_name;
@@ -82,6 +82,22 @@ bot.onText(/(.+)/, function (msg, match) {
     //notes.push({ 'uid': userId, 'time': time, 'text': text });
 
     //bot.sendMessage(userId, `Отлично ${userName}! Я обязательно напомню ${text} в ${time}, если не сдохну :)`);
+});
+*/
+bot.onText(/(.+)/, function (msg, match) {
+    var userId = msg.from.id;
+    var parser, xmlDoc;
+    var text = "<bookstore><book>" +
+        "<title>Everyday Italian</title>" +
+        "<author>Giada De Laurentiis</author>" +
+        "<year>2005</year>" +
+        "</book></bookstore>";
+
+    parser = new DOMParser();
+    xmlDoc = parser.parseFromString(text,"text/xml");
+
+    var text = xmlDoc.getElementsByTagName("title")[0].childNodes[0].nodeValue;
+    bot.sendMessage(userId, text);
 });
 
 setInterval(function(){
